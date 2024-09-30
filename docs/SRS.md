@@ -82,43 +82,43 @@
 ## 2.2 Интерфейс пользователя
 Экран приветствия.  
 
-![Экран приветствия](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Hello%20screen.png)  
+![Экран приветствия](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/Hello%20screen.png)  
 
 Экран регистрации нового пользователя.
 
-![Экран регистрации нового пользователя.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Reg%20screen.png)  
+![Экран регистрации нового пользователя.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/Reg%20screen.png)  
 
 Экран входа в приложение.
 
-![Экран входа в приложение.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Enter%20screen.png)
+![Экран входа в приложение.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/Enter%20screen.png)
 
 Главный экран.
 
-![Главный экран.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Main%20screen.png)
+![Главный экран.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/Main%20screen.png)
 
 Поиск.
 
-![Поиск.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Search.png)
+![Поиск.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/Search.png)
 
 Избранное.
 
-![Избранное.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Favourites.png)
+![Избранное.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/Favourites.png)
 
 Добавление новой книги.
 
-![Добавление новой книги.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Add%20new.png)
+![Добавление новой книги.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/Add%20new.png)
 
 Уведомления.
 
-![Уведомления.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Notifications.png)
+![Уведомления.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/Notifications.png)
 
 Мои книги.
 
-![Мои книги.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/My%20books.png)
+![Мои книги.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/My%20books.png)
 
 Профиль пользователя.  
 
-![Профиль пользователя.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/User.png)                                
+![Профиль пользователя.](https://github.com/pashapapasha228/bookshelfApp/blob/main/docs/User.png)                                
 
 <a name="user_specifications"/>
 
