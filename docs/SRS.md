@@ -82,19 +82,19 @@
 ## 2.2 Интерфейс пользователя
 Экран приветствия.  
 
-![Экран приветствия](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Main screen.png)  
+![Экран приветствия](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Hello%20screen.png)  
 
 Экран регистрации нового пользователя.
 
-![Экран регистрации нового пользователя.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Reg screen.png)  
+![Экран регистрации нового пользователя.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Reg%20screen.png)  
 
 Экран входа в приложение.
 
-![Экран входа в приложение.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Enter screen.png)
+![Экран входа в приложение.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Enter%20screen.png)
 
 Главный экран.
 
-![Главный экран.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Main screen.png)
+![Главный экран.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Main%20screen.png)
 
 Поиск.
 
@@ -106,7 +106,7 @@
 
 Добавление новой книги.
 
-![Добавление новой книги.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Add new.png)
+![Добавление новой книги.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/Add%20new.png)
 
 Уведомления.
 
@@ -114,11 +114,11 @@
 
 Мои книги.
 
-![Мои книги.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/My books.png)
+![Мои книги.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/My%20books.png)
 
 Профиль пользователя.  
 
-![Профиль пользователя.](https://github.com/allapugacheva/EventsMap/blob/main/images/User.png)                                
+![Профиль пользователя.](https://github.com/pashapapasha228/bookshelfApp/blob/main/images/User.png)                                
 
 <a name="user_specifications"/>
 
