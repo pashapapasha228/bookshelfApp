@@ -35,7 +35,7 @@ fun DrawerHeader(
         )
         Text(
             text = email,
-            color = Color.Gray,
+            color = Color.White,
             fontSize = 16.sp,
         )
     }

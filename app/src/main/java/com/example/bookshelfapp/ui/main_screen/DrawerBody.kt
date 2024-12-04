@@ -1,5 +1,6 @@
 package com.example.bookshelfapp.ui.main_screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,6 +10,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import com.example.bookshelfapp.ui.theme.mySalad
 import com.google.firebase.auth.FirebaseAuth
@@ -18,7 +20,10 @@ fun DrawerBody(
     da: FirebaseAuth,
     onExitClick: () -> Unit
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .background(Color.White)
+    ) {
         Button(
             onClick = {
                 da.signOut()

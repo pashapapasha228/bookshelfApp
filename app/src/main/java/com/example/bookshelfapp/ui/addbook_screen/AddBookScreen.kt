@@ -1,10 +1,12 @@
 package com.example.bookshelfapp.ui.addbook_screen
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.util.Base64
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -51,33 +53,18 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 import java.lang.Error
 
-//@Preview(showBackground = true)
+@SuppressLint("SuspiciousIndentation")
 @Composable
 fun AddBookScreen(
     context: Context,
-    onSaved: () -> Unit
+    onSaved: () -> Unit,
+    firestore: FirebaseFirestore
 ) {
-    val title = remember {
-        mutableStateOf("")
-    }
-
-    val author = remember {
-        mutableStateOf("")
-    }
-
-    val description = remember {
-        mutableStateOf("")
-    }
-
-    var selectedCategory = "Бестселлеры";
-
-    val selectedImageUri = remember {
-        mutableStateOf<Uri?>(null)
-    }
-
-    val firestore = remember {
-        Firebase.firestore
-    }
+    val title = remember { mutableStateOf("") }
+    val author = remember { mutableStateOf("") }
+    val description = remember { mutableStateOf("") }
+    var selectedCategory = "Бестселлеры"
+    val selectedImageUri = remember { mutableStateOf<Uri?>(null) }
 
     val imageLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -85,7 +72,6 @@ fun AddBookScreen(
         selectedImageUri.value = uri
     }
 
-    // #90D96D
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -95,10 +81,7 @@ fun AddBookScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(
-                start = 50.dp,
-                end = 50.dp
-            ),
+            .padding(start = 50.dp, end = 50.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
@@ -111,15 +94,13 @@ fun AddBookScreen(
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(15.dp))
-        if(selectedImageUri.value != null)
-        Image(
-            painter = rememberAsyncImagePainter(
-                model = selectedImageUri.value
-            ),
-            contentDescription = "BG",
-            modifier = Modifier.size(150.dp),
-            contentScale = ContentScale.Crop
-        )
+        if (selectedImageUri.value != null)
+            Image(
+                painter = rememberAsyncImagePainter(model = selectedImageUri.value),
+                contentDescription = "BG",
+                modifier = Modifier.size(150.dp),
+                contentScale = ContentScale.Crop
+            )
         Spacer(modifier = Modifier.height(15.dp))
         RoundedCornerTextField(
             text = title.value,
@@ -164,10 +145,11 @@ fun AddBookScreen(
                     category = selectedCategory
                 ),
                 onSaved = {
-                    onSaved()
+                    Toast.makeText(context, "Книга успешно добавлена!", Toast.LENGTH_SHORT).show()
+                    onSaved() // Вызов коллбэка после сохранения
                 },
                 onError = {
-
+                    Toast.makeText(context, "Ошибка при добавлении книги", Toast.LENGTH_SHORT).show()
                 }
             )
         }
@@ -187,7 +169,7 @@ private fun saveBookImage(
     val baos = ByteArrayOutputStream()
     bitmap.compress(Bitmap.CompressFormat.JPEG, 75, baos)
 
-    val client = OkHttpClient();
+    val client = OkHttpClient()
 
     val base64Image = Base64.encodeToString(baos.toByteArray(), Base64.NO_WRAP)
 
@@ -205,25 +187,21 @@ private fun saveBookImage(
     client.newCall(request).enqueue(object : Callback {
         override fun onFailure(call: Call, e: IOException) {
             println("Ошибка загрузки: ${e.message}")
+            onError() // Вызов коллбэка при ошибке
         }
 
         override fun onResponse(call: Call, response: Response) {
             if (response.isSuccessful) {
                 val responseData = response.body?.string()
-                // Извлечение URL из ответа
-
-                //if (responseData.isNullOrEmpty())
-
                 val gson = Gson()
                 val jsonObject = gson.fromJson(responseData, JsonObject::class.java)
                 val dataObject = jsonObject.getAsJsonObject("data")
-
                 val url = dataObject.get("url").asString
 
-                if (url != null) {
+                if (url.isNotEmpty()) {
                     saveBookToFirestore(
                         firestore,
-                        url.toString(),
+                        url,
                         book,
                         onSaved = {
                             onSaved()
@@ -235,6 +213,7 @@ private fun saveBookImage(
                 }
             } else {
                 println("Ошибка: ${response.code}")
+                onError() // Вызов коллбэка при ошибке
             }
         }
     })
@@ -248,11 +227,11 @@ private fun saveBookToFirestore(
     onError: () -> Unit
 ) {
     val db = firestore.collection("books")
-    val key = db.document().id
+    val key = db.document().id // Создаем уникальный ключ для книги
     db.document(key)
         .set(
             book.copy(
-                key = key,
+                key = key, // Добавляем ключ к объекту книги
                 imageURL = url
             )
         )

@@ -85,9 +85,9 @@ class MainActivity : ComponentActivity() {
                 composable<MainScreenDataObject> { navEntry ->
                     val navData = navEntry.toRoute<MainScreenDataObject>()
                     MainScreen(navData, context,
-                        onButtonClick = {
-                            navController.navigate(AddScreenObject)
-                        },
+//                        onButtonClick = {
+//                            navController.navigate(AddScreenObject)
+//                        },
                         onExitClick = {
                             navController.navigate(LoginScreenObject)
                         })
@@ -96,9 +96,9 @@ class MainActivity : ComponentActivity() {
 //                    }
                 }
 
-                composable<AddScreenObject> {
-                    AddBookScreen(context) { }
-                }
+//                composable<AddScreenObject> {
+//                    AddBookScreen(context)
+//                }
             }
         }
     }

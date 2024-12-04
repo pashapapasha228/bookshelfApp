@@ -5,6 +5,8 @@ data class Book(
     val title: String = "",
     val author: String = "",
     val description: String = "",
+    val imageURL: String = "",
     val category: String = "",
-    val imageURL: String = ""
+    val userAuthorId: String = "",
+    val userFavouriteId: String = ""
 )

@@ -1,4 +1,4 @@
-package com.example.bookshelfapp.ui.main_screen
+package com.example.bookshelfapp.ui.favouritebooks_screen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -23,9 +23,10 @@ import coil3.compose.AsyncImage
 import com.example.bookshelfapp.data.Book
 
 @Composable
-fun BookListItemUI(
+fun FavouriteListItemUI(
     book: Book,
-    onAddToFavorites: (Book) -> Unit
+    onDelete: (Book) -> Unit,
+    onReturn: (Book) -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -97,13 +98,20 @@ fun BookListItemUI(
                 modifier = Modifier.padding(bottom = 10.dp)
             )
 
-            // Кнопка "Добавить в избранное"
             Button(
-                onClick = { onAddToFavorites(book) },
+                onClick = { onReturn(book) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Добавить в избранное")
+                Text("Вернуть книгу в каталог")
+            }
+
+            Button(
+                onClick = { onDelete(book) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(8.dp)
+            ) {
+                Text("Забрать книгу")
             }
         }
     }
