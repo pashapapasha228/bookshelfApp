@@ -58,7 +58,8 @@ import java.lang.Error
 fun AddBookScreen(
     context: Context,
     onSaved: () -> Unit,
-    firestore: FirebaseFirestore
+    firestore: FirebaseFirestore,
+    userId: String
 ) {
     val title = remember { mutableStateOf("") }
     val author = remember { mutableStateOf("") }
@@ -142,7 +143,8 @@ fun AddBookScreen(
                     title = title.value,
                     author = author.value,
                     description = description.value,
-                    category = selectedCategory
+                    category = selectedCategory,
+                    userAuthorId = userId
                 ),
                 onSaved = {
                     Toast.makeText(context, "Книга успешно добавлена!", Toast.LENGTH_SHORT).show()

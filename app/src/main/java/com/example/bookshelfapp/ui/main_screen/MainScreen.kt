@@ -33,6 +33,7 @@ import com.example.bookshelfapp.ui.addbook_screen.RoundedCornerDropDownMenu
 import com.example.bookshelfapp.ui.favouritebooks_screen.FavouriteBooksScreen
 import com.example.bookshelfapp.ui.login.data.MainScreenDataObject
 import com.example.bookshelfapp.ui.main_screen.bottom_menu.BottomMenu
+import com.example.bookshelfapp.ui.mybooks_screen.MyBooksScreen
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -51,7 +52,7 @@ fun MainScreen(
     onExitClick: () -> Unit
 ) {
     val db = remember { Firebase.firestore }
-    var userId by remember { mutableStateOf(FirebaseAuth.getInstance().currentUser?.uid) }
+    val userId by remember { mutableStateOf(FirebaseAuth.getInstance().currentUser?.uid) }
 
     val items = listOf(
         NavItemState(title = "Каталог", iconId = R.drawable.ic_main),
@@ -63,6 +64,7 @@ fun MainScreen(
     var bottomNavState by remember { mutableStateOf(0) }
     var booksListState by remember { mutableStateOf(emptyList<Book>()) }
     var favouriteBooksState by remember { mutableStateOf(emptyList<Book>()) }
+    var myBooksState by remember { mutableStateOf(emptyList<Book>()) }
 
     // Получаем все книги при первом запуске
     LaunchedEffect(Unit) {
@@ -71,6 +73,9 @@ fun MainScreen(
         }
         fetchFavouriteBooksForCurrentUser(db, userId) { books ->
             favouriteBooksState = books
+        }
+        fetchMyBooksForCurrentUser(db, userId) { books ->
+            myBooksState = books
         }
     }
 
@@ -94,7 +99,7 @@ fun MainScreen(
                             selected = bottomNavState == index,
                             onClick = {
                                 bottomNavState = index
-                                if (index == 0) { // Избранное
+                                if (index == 0) { // Главный экран
                                     fetchAllBooks(db) { books ->
                                         booksListState = books
                                     }
@@ -102,6 +107,11 @@ fun MainScreen(
                                 if (index == 1) { // Избранное
                                     fetchFavouriteBooksForCurrentUser(db, userId) { books ->
                                         favouriteBooksState = books
+                                    }
+                                }
+                                if(index == 3) { // Мои книги
+                                    fetchMyBooksForCurrentUser(db, userId) { books ->
+                                        myBooksState = books
                                     }
                                 }
                             },
@@ -164,6 +174,7 @@ fun MainScreen(
                     AddBookScreen(
                         context = context,
                         firestore = db,
+                        userId = userId.toString(),
                         onSaved = {
                             fetchAllBooks(db) { books ->
                                 booksListState = books
@@ -172,7 +183,20 @@ fun MainScreen(
                     )
                 }
                 3 -> {
-                    //MyBooksScreen()
+                    MyBooksScreen(
+                        myBooks = myBooksState,
+                        paddingValues = paddingValues,
+                        onDelete = { book ->
+                            deleteBook(book, db) {
+                                fetchMyBooksForCurrentUser(db, userId) { books ->
+                                    myBooksState = books
+                                }
+                            }
+                        },
+                        onChange = {
+
+                        }
+                    )
                 }
             }
         }
@@ -208,6 +232,23 @@ private fun fetchFavouriteBooksForCurrentUser(
         }
         .addOnFailureListener { e ->
             Log.e("MainScreen", "Ошибка при получении избранных книг", e)
+        }
+}
+
+private fun fetchMyBooksForCurrentUser(
+    db: FirebaseFirestore,
+    userId: String?,
+    onBooks: (List<Book>) -> Unit
+) {
+    if (userId == null) return
+    db.collection("books")
+        .whereEqualTo("userAuthorId", userId)
+        .get()
+        .addOnSuccessListener { task ->
+            onBooks(task.toObjects(Book::class.java))
+        }
+        .addOnFailureListener { e ->
+            Log.e("MainScreen", "Ошибка при получении моих книг", e)
         }
 }
 
