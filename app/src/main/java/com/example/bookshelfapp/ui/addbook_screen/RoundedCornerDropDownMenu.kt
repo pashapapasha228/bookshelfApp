@@ -22,10 +22,11 @@ import com.example.bookshelfapp.ui.theme.mySalad
 
 @Composable
 fun RoundedCornerDropDownMenu(
-    onOptionSelected: (String) -> Unit
+    onOptionSelected: (String) -> Unit,
+    initialOption: String? = null // Параметр для начального состояния
 ) {
     val expanded = remember { mutableStateOf(false) }
-    val selectedOption = remember { mutableStateOf("") }
+    val selectedOption = remember { mutableStateOf(initialOption ?: "") } // Используем начальное значение или пустую строку
     val categoriesList = listOf(
         "Фантастика",
         "Драма",
@@ -47,7 +48,7 @@ fun RoundedCornerDropDownMenu(
             }
             .padding(15.dp)
     ) {
-        Text(text = selectedOption.value)
+        Text(text = if (selectedOption.value.isEmpty()) "Выберите категорию" else selectedOption.value)
         DropdownMenu(
             expanded = expanded.value,
             onDismissRequest = {

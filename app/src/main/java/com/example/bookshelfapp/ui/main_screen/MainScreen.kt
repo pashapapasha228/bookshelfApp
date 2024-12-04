@@ -61,6 +61,8 @@ fun MainScreen(
         NavItemState(title = "Мои книги", iconId = R.drawable.ic_my)
     )
 
+    var redBook: Book? by remember { mutableStateOf(null) }
+
     var bottomNavState by remember { mutableStateOf(0) }
     var booksListState by remember { mutableStateOf(emptyList<Book>()) }
     var favouriteBooksState by remember { mutableStateOf(emptyList<Book>()) }
@@ -131,6 +133,7 @@ fun MainScreen(
         ) { paddingValues ->
             when (bottomNavState) {
                 0 -> {
+                    redBook = null
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
@@ -151,6 +154,7 @@ fun MainScreen(
                     }
                 }
                 1 -> {
+                    redBook = null
                     FavouriteBooksScreen(
                         favouriteBooks = favouriteBooksState,
                         paddingValues = paddingValues,
@@ -179,10 +183,14 @@ fun MainScreen(
                             fetchAllBooks(db) { books ->
                                 booksListState = books
                             }
-                        }
+                            redBook = null
+                            bottomNavState = 1
+                        },
+                        book = redBook
                     )
                 }
                 3 -> {
+                    redBook = null
                     MyBooksScreen(
                         myBooks = myBooksState,
                         paddingValues = paddingValues,
@@ -193,8 +201,9 @@ fun MainScreen(
                                 }
                             }
                         },
-                        onChange = {
-
+                        onChange = { book ->
+                            redBook = book
+                            bottomNavState = 2;
                         }
                     )
                 }
