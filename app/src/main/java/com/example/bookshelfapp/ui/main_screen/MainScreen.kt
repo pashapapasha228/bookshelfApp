@@ -52,6 +52,7 @@ data class NavItemState(
 fun MainScreen(
     navData: MainScreenDataObject,
     context: Context,
+    apiKey: String,
     onExitClick: () -> Unit
 ) {
     val db = remember { Firebase.firestore }
@@ -188,6 +189,7 @@ fun MainScreen(
                 }
                 2 -> {
                     AddBookScreen(
+                        apiKey = apiKey,
                         context = context,
                         firestore = db,
                         userId = userId.toString(),

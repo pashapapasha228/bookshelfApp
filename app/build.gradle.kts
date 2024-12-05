@@ -11,6 +11,14 @@ android {
     namespace = "com.example.bookshelfapp"
     compileSdk = 34
 
+    ndkVersion = "21.3.6528147"
+
+    externalNativeBuild {
+        cmake {
+            path = file("src/main/java/com/example/bookshelfapp/c/CMakeLists.txt") // Укажите правильный путь
+        }
+    }
+
     defaultConfig {
         applicationId = "com.example.bookshelfapp"
         minSdk = 24

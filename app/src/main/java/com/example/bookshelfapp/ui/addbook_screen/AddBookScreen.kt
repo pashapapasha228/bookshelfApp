@@ -68,6 +68,7 @@ fun AddBookScreen(
     context: Context,
     firestore: FirebaseFirestore,
     userId: String,
+    apiKey: String,
     onSaved: () -> Unit,
     book: Book? = null // Новый параметр для редактирования
 ) {
@@ -190,6 +191,7 @@ fun AddBookScreen(
                     if(selectedImageUri.value != null)
                     // Логика добавления новой книги
                     saveBookImage(
+                        apiKey,
                         true,
                         selectedImageUri.value!!,
                         context,
@@ -243,6 +245,7 @@ fun AddBookScreen(
                     // Логика обновления существующей книги
                     if (selectedImageUri.value != null)
                         saveBookImage(
+                            apiKey,
                             false,
                             selectedImageUri.value!!,
                             context,
@@ -335,6 +338,7 @@ private fun updateBookInFirestore(
 }
 
 private fun saveBookImage(
+    apiKey: String,
     isCreateBook: Boolean,
     uri: Uri,
     context: Context,
@@ -355,7 +359,7 @@ private fun saveBookImage(
     val requestBody = MultipartBody.Builder()
         .setType(MultipartBody.FORM)
         .addFormDataPart("image", base64Image)
-        .addFormDataPart("key", "ea27d0b9a26f3cb9f7baf3f50aae5bcd") // Замените на ваш API-ключ
+        .addFormDataPart("key", apiKey) // Замените на ваш API-ключ
         .build()
 
     val request = Request.Builder()

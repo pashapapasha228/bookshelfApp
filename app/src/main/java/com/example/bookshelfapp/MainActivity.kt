@@ -65,6 +65,12 @@ import java.io.ByteArrayOutputStream
 import java.io.IOException
 
 class MainActivity : ComponentActivity() {
+    init {
+        System.loadLibrary("native-lib")
+    }
+
+    external fun getApiKey(): String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
@@ -85,9 +91,8 @@ class MainActivity : ComponentActivity() {
                 composable<MainScreenDataObject> { navEntry ->
                     val navData = navEntry.toRoute<MainScreenDataObject>()
                     MainScreen(navData, context,
-//                        onButtonClick = {
-//                            navController.navigate(AddScreenObject)
-//                        },
+                        apiKey = getApiKey(),
+//                        apiKey = "ea27d0b9a26f3cb9f7baf3f50aae5bcd",
                         onExitClick = {
                             navController.navigate(LoginScreenObject)
                         })
