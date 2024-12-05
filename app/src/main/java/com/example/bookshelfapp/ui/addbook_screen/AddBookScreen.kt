@@ -34,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -42,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil3.compose.AsyncImage
 import coil3.compose.rememberAsyncImagePainter
+import com.example.bookshelfapp.R
 import com.example.bookshelfapp.data.Book
 import com.example.bookshelfapp.ui.login.LoginButton
 import com.example.bookshelfapp.ui.login.RoundedCornerTextField
@@ -114,8 +116,7 @@ fun AddBookScreen(
                     contentScale = ContentScale.Crop
                 )
             }
-
-            if (selectedImageUri.value == null && book != null) {
+            else if (book != null) {
                 AsyncImage(
                     model = book.imageURL,
                     contentDescription = "book cover",
@@ -126,7 +127,20 @@ fun AddBookScreen(
                     contentScale = ContentScale.Crop // Изменяем на Crop для лучшего отображения
                 )
             }
+            else {
+                // Используйте изображение по умолчанию
+                Image(
+                    painter = painterResource(id = R.drawable.img), // Укажите правильный путь к изображению
+                    contentDescription = "default book cover",
+                    modifier = Modifier
+                        .size(150.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .border(2.dp, Color.Gray, RoundedCornerShape(8.dp)),
+                    contentScale = ContentScale.Crop
+                )
+            }
         }
+
         //Spacer(modifier = Modifier.height(16.dp))
 
         item{
@@ -173,6 +187,7 @@ fun AddBookScreen(
         item {
             LoginButton(if (book == null) "Добавить книгу" else "Сохранить изменения") {
                 if (book == null) {
+                    if(selectedImageUri.value != null)
                     // Логика добавления новой книги
                     saveBookImage(
                         true,
@@ -199,6 +214,31 @@ fun AddBookScreen(
                             ).show()
                         }
                     )
+                    else
+                        saveBookToFirestore(
+                            firestore = firestore,
+                            url = "https://ibb.co/PMv3rMn",
+                            book = Book(
+                                title = title.value,
+                                author = author.value,
+                                description = description.value,
+                                category = selectedCategory.value,
+                                userAuthorId = userId
+                            ),
+                            onSaved = {
+                                Toast.makeText(context, "Книга успешно добавлена!", Toast.LENGTH_SHORT)
+                                    .show()
+                                onSaved()
+                            },
+                            onError = {
+                                Toast.makeText(
+                                    context,
+                                    "Ошибка при добавлении книги",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                        )
                 } else {
                     // Логика обновления существующей книги
                     if (selectedImageUri.value != null)

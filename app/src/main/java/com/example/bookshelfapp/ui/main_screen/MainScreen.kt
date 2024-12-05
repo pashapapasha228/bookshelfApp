@@ -9,7 +9,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalDrawerSheet
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -83,13 +86,22 @@ fun MainScreen(
 
     ModalNavigationDrawer(
         modifier = Modifier.fillMaxSize(),
+        drawerState = DrawerState(DrawerValue.Closed),
         drawerContent = {
-            Column(Modifier.fillMaxWidth(0.7f)) {
-                DrawerHeader(navData.email)
-                DrawerBody(FirebaseAuth.getInstance()) {
-                    onExitClick()
+            ModalDrawerSheet {
+                Column(Modifier.fillMaxWidth(0.7f)) {
+                    DrawerHeader(navData.email)
+                    DrawerBody(FirebaseAuth.getInstance()) {
+                        onExitClick()
+                    }
                 }
             }
+//            Column(Modifier.fillMaxWidth(0.7f)) {
+//                DrawerHeader(navData.email)
+//                DrawerBody(FirebaseAuth.getInstance()) {
+//                    onExitClick()
+//                }
+//            }
         }
     ) {
         Scaffold(
