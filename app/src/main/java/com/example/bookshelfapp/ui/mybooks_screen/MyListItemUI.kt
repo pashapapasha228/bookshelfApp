@@ -82,6 +82,20 @@ fun MyListItemUI(
                 modifier = Modifier.padding(bottom = 10.dp)
             )
 
+            Text(
+                text = "Категория:",
+                fontWeight = FontWeight.Bold,
+                fontSize = 16.sp,
+                modifier = Modifier.padding(bottom = 5.dp)
+            )
+            Text(
+                text = book.category, // Предполагается, что в вашем классе Book есть поле category
+                fontWeight = FontWeight.SemiBold,
+                fontSize = 18.sp,
+                color = Color.Gray,
+                modifier = Modifier.padding(bottom = 10.dp)
+            )
+
             // Подпись и описание книги
             Text(
                 text = "Описание:",
